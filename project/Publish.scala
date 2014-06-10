@@ -2,7 +2,7 @@ import sbt._
 import Keys._
 
 object Publish {
-  val artifactory = "http://artifactory:8081/artifactory/"
+  val artifactory = "../../artifactory/snapshots/"
 
   /**
    * content of ~/.sbt.credentials:
@@ -18,7 +18,7 @@ object Publish {
     publishArtifact in Compile := true,
     publishArtifact in Test := false,
     publishTo <<= (version) { (v: String) =>
-      if (v.trim.endsWith("SNAPSHOT")) Some("snapshots" at artifactory + "libs-snapshot-local")
+      if (v.trim.endsWith("SNAPSHOT")) Some(Resolver.file("file", new File(artifactory)))
       else Some("releases" at artifactory + "libs-release-local")
     },
     // Alter publish config not to publish source code (publishLocalConfiguration is unchanged, source will be published when issuing publish-local command)
