@@ -2,7 +2,24 @@ import sbt._
 import Keys._
 
 object Publish {
-  val artifactory = "../../artifactory/snapshots/"
+
+  /**
+   * Project directory layout: root/*group*/*project*
+   * where artifactory is at the same level with root
+   * 
+   * artifactory/
+   *     releases
+   *     snapshots
+   * root
+   *     backend
+   *     common
+   *         data
+   *         utilz
+   *         ...
+   *     frontend
+   *         zitadelz
+   */
+  val artifactory = "../../../artifactory/"
 
   /**
    * content of ~/.sbt.credentials:
@@ -18,7 +35,7 @@ object Publish {
     publishArtifact in Compile := true,
     publishArtifact in Test := false,
     publishTo <<= (version) { (v: String) =>
-      if (v.trim.endsWith("SNAPSHOT")) Some(Resolver.file("file", new File(artifactory)))
+      if (v.trim.endsWith("SNAPSHOT")) Some(Resolver.file("file", new File(artifactory + "snapshots")))
       else Some("releases" at artifactory + "libs-release-local")
     },
     // Alter publish config not to publish source code (publishLocalConfiguration is unchanged, source will be published when issuing publish-local command)
