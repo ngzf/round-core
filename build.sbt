@@ -11,7 +11,7 @@ name := "TEMPLATE"
 
 description := "A template for sbt projects."
 
-version := "0.1-SNAPSHOT"
+version := Version.zitadelzVersion
 
 organization := "com.zitadelz"
 
