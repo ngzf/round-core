@@ -1,8 +1,0 @@
-package com.zitadelz.system.core;
-
-message PersistingProtuf {
-  required bytes payload = 1;
-  required int64 sequenceNr = 2;
-  optional bytes payloadManifest = 3;
-  optional int32 payloadSerializerId = 4;
-}
