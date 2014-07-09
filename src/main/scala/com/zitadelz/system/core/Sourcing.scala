@@ -11,9 +11,9 @@ import akka.actor.ActorRef
 
 trait Sourcing[Command] {
 
-  case class Envelope(payload: Command, sequenceNr: Long, senderStack: List[ActorRef])
+  case class Envelope(payload: Command = dummy, sequenceNr: Long = 0L, senderStack: List[ActorRef] = Nil)
 
-  def empty: Envelope = Envelope(dummy, 0L, Nil)
+  def empty: Envelope = Envelope()
 
   protected def dummy: Command
 }
