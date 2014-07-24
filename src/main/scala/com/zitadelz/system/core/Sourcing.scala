@@ -14,6 +14,7 @@ trait Sourcing[Command] {
   case class Envelope(payload: Command = dummy, sequenceNr: Long = 0L, senderStack: List[ActorRef] = Nil)
 
   def empty: Envelope = Envelope()
+  def sourcingId(sourcingNr: Int): String = s"sourcing-$sourcingNr"
 
   protected def dummy: Command
 }
