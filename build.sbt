@@ -11,7 +11,7 @@ sourceGenerators in Compile <+= sourceManaged in Compile zip baseDirectory map {
   val (srcManaged, base) = files
   val outDir = new File(srcManaged, "/protuf/")
   outDir.mkdirs()
-  net.sandrogrzicic.scalabuff.compiler.ScalaBuff.main(Array("--scala_out=" + outDir, "--proto_path=" + base + "/src/main/protuf/"))
+  net.sandrogrzicic.scalabuff.compiler.ScalaBuff.main(Array("--scala_out=" + outDir, "--proto_path=" + base + "/src/main/protuf/", "--target=" + Version.scalaVersion))
   (outDir ** "*.scala").get
 }
 
@@ -21,7 +21,7 @@ sourceGenerators in Test <+= sourceManaged in Test zip baseDirectory map { (file
   val (srcManaged, base) = files
   val outDir = new File(srcManaged, "/protuf/")
   outDir.mkdirs()
-  net.sandrogrzicic.scalabuff.compiler.ScalaBuff.main(Array("--scala_out=" + outDir, "--proto_path=" + base + "/src/test/protuf/"))
+  net.sandrogrzicic.scalabuff.compiler.ScalaBuff.main(Array("--scala_out=" + outDir, "--proto_path=" + base + "/src/test/protuf/", "--target=" + Version.scalaVersion))
   (outDir ** "*.scala").get
 }
 

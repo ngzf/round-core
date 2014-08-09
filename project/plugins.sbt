@@ -7,4 +7,4 @@ resolvers := Seq(Resolver.file("Local Ivy Repository", file(Path.userHome.absolu
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-scalariform" % "1.3.0")
 
-libraryDependencies += "net.sandrogrzicic" %% "scalabuff-compiler" % "1.3.8" % "compile"
+libraryDependencies += "net.sandrogrzicic" %% "scalabuff-compiler" % "1.3.8-z" % "compile"
