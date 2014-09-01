@@ -1,5 +1,3 @@
-resolvers += "Zitadelz Snapshots" at "https://gitlab.com/nzf/artifactory/raw/master/snapshots/"
-
 libraryDependencies ++= Seq(
 )
 
