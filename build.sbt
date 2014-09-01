@@ -1,5 +1,3 @@
-resolvers += "Zitadelz Snapshots" at "https://gitlab.com/nzf/artifactory/raw/master/snapshots/"
-
 libraryDependencies ++= Seq(
   "commons-codec" % "commons-codec" % "1.9",
   "net.sandrogrzicic" %% "scalabuff-runtime" % "1.3.8",
