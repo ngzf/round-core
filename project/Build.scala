@@ -19,6 +19,8 @@ object ApplicationBuild extends Build {
 
   val buildSettings = Defaults.coreDefaultSettings ++ Publish.defaultSettings ++ formatSettings ++ Seq(
     scalaVersion in ThisBuild := Version.scalaVersion,
+    unmanagedSourceDirectories in Compile <<= (scalaSource in Compile)(_ :: Nil),
+    unmanagedSourceDirectories in Test <<= (scalaSource in Test)(_ :: Nil),
     scalacOptions in Compile ++= List("-Xmax-classfile-name", "143"), // ecryptfs limit, see https://bugs.launchpad.net/ecryptfs/+bug/344878 and https://issues.scala-lang.org/browse/SI-3623
     scalacOptions in Compile += "-feature",
     scalacOptions += "-Dscalac.patmat.analysisBudget=off",
