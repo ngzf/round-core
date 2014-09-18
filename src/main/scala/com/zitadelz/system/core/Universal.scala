@@ -9,7 +9,7 @@ package com.zitadelz.system.core
 trait Universal
 
 /**
- * Counterpart of the model object `U` at the persistent layer.
+ * Counterpart of the model object `U` at the persistence layer.
  */
 trait Persistent[U <: Universal] {
   def universal: U
