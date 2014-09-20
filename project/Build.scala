@@ -30,6 +30,7 @@ object ApplicationBuild extends Build {
       "Zitadelz Artifactory" at "http://artifactory/artifactory/repo",
       "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases",
       "Typesafe Maven Repository" at "http://repo.typesafe.com/typesafe/maven-releases",
+      "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases",
       Resolver.url("Zitadelz Artifactory Ivy", url("http://artifactory:8081/artifactory/repo"))(Resolver.ivyStylePatterns))) ++ super.settings
 
   lazy val root = Project(id = "root", base = file("."), settings = buildSettings)
