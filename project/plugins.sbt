@@ -1,11 +1,10 @@
 // Comment to get more information during initialization
 logLevel := Level.Warn
 
-resolvers := Seq(Resolver.file("Local Ivy Repository", file(Path.userHome.absolutePath + "/.ivy2/local"))(Resolver.ivyStylePatterns),
-  "Zitadelz Snapshots" at "https://gitlab.com/nzf/artifactory/raw/master/snapshots/",
-  "Zitadelz Artifactory" at "http://artifactory/artifactory/repo",
+resolvers := Seq(
+  "Zitadelz Artifactory" at "http://artifactory:8081/artifactory/repo",
+  Resolver.file("Local Ivy Repository", file(Path.userHome.absolutePath + "/.ivy2/local"))(Resolver.ivyStylePatterns),
   "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases",
-  "Typesafe Maven Repository" at "http://repo.typesafe.com/typesafe/maven-releases",
-  Resolver.url("Zitadelz Artifactory Ivy", url("http://artifactory:8081/artifactory/repo"))(Resolver.ivyStylePatterns))
+  "Typesafe Maven Repository" at "http://repo.typesafe.com/typesafe/maven-releases")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-scalariform" % "1.3.0")

@@ -3,26 +3,10 @@ import Keys._
 
 object Publish {
 
-  /**
-   * Project directory layout: root/*group*/*project*
-   * where artifactory is at the same level with root
-   * 
-   * artifactory/
-   *     releases
-   *     snapshots
-   * root
-   *     backend
-   *     common
-   *         data
-   *         utilz
-   *         ...
-   *     frontend
-   *         zitadelz
-   */
-  val artifactory = "../../../artifactory/"
+  val artifactory = "http://artifactory:8081/artifactory/"
 
   /**
-   * content of ~/.sbt.credentials:
+   * content of ~/.sbt/.credentials:
    *
    * realm=Artifactory Realm
    * host=artifactory
@@ -35,7 +19,7 @@ object Publish {
     publishArtifact in Compile := true,
     publishArtifact in Test := false,
     publishTo <<= (version) { (v: String) =>
-      if (v.trim.endsWith("SNAPSHOT")) Some(Resolver.file("file", new File(artifactory + "snapshots")))
+      if (v.trim.endsWith("SNAPSHOT")) Some("snapshots" at artifactory + "libs-snapshot-local")
       else Some("releases" at artifactory + "libs-release-local")
     },
     // Alter publish config not to publish source code (publishLocalConfiguration is unchanged, source will be published when issuing publish-local command)
