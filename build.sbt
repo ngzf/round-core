@@ -1,9 +1,9 @@
 libraryDependencies ++= Seq(
-  "commons-codec" % "commons-codec" % "1.9",
+  "commons-codec" % "commons-codec" % "1.10",
   "net.sandrogrzicic" %% "scalabuff-runtime" % "1.3.8",
   "com.typesafe.play" %%  "play" % Version.playVersion,
   "org.scalaz" %% "scalaz-core" % "7.1.0",
-  "org.specs2" %% "specs2" % "2.4.3" % "test"
+  "org.specs2" %% "specs2" % "2.4.12" % "test"
 )
 
 sourceGenerators in Compile <+= sourceManaged in Compile zip baseDirectory map { (files: (java.io.File, java.io.File)) =>
