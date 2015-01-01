@@ -2,8 +2,6 @@ package com.zitadelz.system.core
 
 import java.util.UUID
 
-import play.api.mvc.PathBindable
-
 /**
  * Universally unique identifiers.
  */
@@ -33,17 +31,4 @@ private[core] object Identifier {
 
   def apply[A <: HasId[A]](base64: String): StandardIdentifier[A] =
     StandardIdentifier(base64)
-
-  implicit def pathBinder[A <: HasId[A]]: PathBindable[Identifier[A]] =
-    new PathBindable[Identifier[A]] {
-      override def bind(key: String, value: String): Either[String, Identifier[A]] =
-        try {
-          Right(Identifier[A](value))
-        } catch {
-          case e: Exception => Left(s"Cannot parse path element $key as Identifier: ${e.getMessage}")
-        }
-
-      override def unbind(key: String, id: Identifier[A]): String =
-        id.base64
-    }
 }
