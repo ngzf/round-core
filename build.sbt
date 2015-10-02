@@ -1,16 +1,16 @@
 libraryDependencies ++= Seq(
   "commons-codec" % "commons-codec" % "1.10",
-  "net.sandrogrzicic" %% "scalabuff-runtime" % "1.3.8",
-  "com.typesafe.play" %%  "play" % Version.playVersion,
-  "org.scalaz" %% "scalaz-core" % "7.1.0",
-  "org.specs2" %% "specs2" % "2.4.12" % "test"
+  "net.sandrogrzicic" %% "scalabuff-runtime" % Version.scalabuff,
+  "com.typesafe.play" %%  "play" % Version.play,
+  "org.scalaz" %% "scalaz-core" % Version.scalaz,
+  "org.specs2" %% "specs2-core" % Version.specs2 % "test"
 )
 
 sourceGenerators in Compile <+= sourceManaged in Compile zip baseDirectory map { (files: (java.io.File, java.io.File)) =>
   val (srcManaged, base) = files
   val outDir = new File(srcManaged, "/protuf/")
   outDir.mkdirs()
-  net.sandrogrzicic.scalabuff.compiler.ScalaBuff.main(Array("--scala_out=" + outDir, "--proto_path=" + base + "/src/main/protuf/", "--target=" + Version.scalaVersion))
+  net.sandrogrzicic.scalabuff.compiler.ScalaBuff.main(Array("--scala_out=" + outDir, "--proto_path=" + base + "/src/main/protuf/", "--target=" + Version.scala))
   (outDir ** "*.scala").get
 }
 
@@ -20,7 +20,7 @@ sourceGenerators in Test <+= sourceManaged in Test zip baseDirectory map { (file
   val (srcManaged, base) = files
   val outDir = new File(srcManaged, "/protuf/")
   outDir.mkdirs()
-  net.sandrogrzicic.scalabuff.compiler.ScalaBuff.main(Array("--scala_out=" + outDir, "--proto_path=" + base + "/src/test/protuf/", "--target=" + Version.scalaVersion))
+  net.sandrogrzicic.scalabuff.compiler.ScalaBuff.main(Array("--scala_out=" + outDir, "--proto_path=" + base + "/src/test/protuf/", "--target=" + Version.scala))
   (outDir ** "*.scala").get
 }
 
@@ -34,7 +34,7 @@ name := "Core"
 
 description := "Core types of Zitadelz."
 
-version := Version.zitadelzVersion
+version := Version.ours()
 
 organization := "com.zitadelz"
 

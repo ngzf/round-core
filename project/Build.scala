@@ -12,13 +12,14 @@ object ApplicationBuild extends Build {
     .setPreference(AlignParameters, true)
     .setPreference(AlignSingleLineCaseStatements, true)
     .setPreference(DoubleIndentClassDeclaration, true)
+    .setPreference(SpacesAroundMultiImports, true) // this was changed in 0.1.7 scalariform, setting this to preserve default.
 
   lazy val formatSettings = SbtScalariform.scalariformSettings ++ Seq(
     ScalariformKeys.preferences in Compile := formattingPreferences,
     ScalariformKeys.preferences in Test := formattingPreferences)
 
   val buildSettings = Defaults.coreDefaultSettings ++ Publish.defaultSettings ++ formatSettings ++ Seq(
-    scalaVersion in ThisBuild := Version.scalaVersion,
+    scalaVersion in ThisBuild := Version.scala,
     unmanagedSourceDirectories in Compile <<= (scalaSource in Compile)(_ :: Nil),
     unmanagedSourceDirectories in Test <<= (scalaSource in Test)(_ :: Nil),
     scalacOptions in Compile ++= List("-Xmax-classfile-name", "143"), // ecryptfs limit, see https://bugs.launchpad.net/ecryptfs/+bug/344878 and https://issues.scala-lang.org/browse/SI-3623

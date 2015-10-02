@@ -7,6 +7,7 @@ resolvers := Seq(
   "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases",
   "Typesafe Maven Repository" at "http://repo.typesafe.com/typesafe/maven-releases")
 
-addSbtPlugin("com.typesafe.sbt" % "sbt-scalariform" % "1.3.0")
+addSbtPlugin("org.scalariform" % "sbt-scalariform" % "1.5.1")
 
-libraryDependencies += "net.sandrogrzicic" %% "scalabuff-compiler" % "1.3.8-z" % "compile"
+libraryDependencies += "net.sandrogrzicic" %% "scalabuff-compiler" % Version.scalabuff % "compile"
+
