@@ -7,4 +7,4 @@ resolvers := Seq(
   "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases",
   "Typesafe Maven Repository" at "http://repo.typesafe.com/typesafe/maven-releases")
 
-addSbtPlugin("com.typesafe.sbt" % "sbt-scalariform" % "1.3.0")
+addSbtPlugin("org.scalariform" % "sbt-scalariform" % "1.5.1")
