@@ -9,7 +9,7 @@ name := "TEMPLATE"
 
 description := "A template for sbt projects."
 
-version := Version.zitadelzVersion
+version := Version.ours()
 
 organization := "com.zitadelz"
 
