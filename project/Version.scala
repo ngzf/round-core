@@ -13,5 +13,5 @@ object Version {
   private def fix: Int = 0
   private def snapshot: Boolean = true
   def ours(major: Int = major, minor: Int = minor, fix: Int = fix, snapshot: Boolean = snapshot): String =
-    s"$major.$minor.$fix-${ if (snapshot) "SNAPSHOT" else "" }"
+    s"$major.$minor.$fix${ if (snapshot) "-SNAPSHOT" else "" }"
 }
