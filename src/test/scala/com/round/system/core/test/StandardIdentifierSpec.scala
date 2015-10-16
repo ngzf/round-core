@@ -1,8 +1,8 @@
-package com.zitadelz.system.core.test
+package com.round.system.core.test
 
 import org.specs2.mutable.Specification
 
-import com.zitadelz.system.core.StandardIdentifier
+import com.round.system.core.StandardIdentifier
 
 class StandardIdentifierSpec extends Specification {
 

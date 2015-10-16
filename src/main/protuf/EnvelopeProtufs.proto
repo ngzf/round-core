@@ -1,4 +1,4 @@
-package com.zitadelz.system.core;
+package com.round.system.core;
 
 message EnvelopeProtuf {
   required bytes payload = 1;

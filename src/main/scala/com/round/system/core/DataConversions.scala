@@ -1,6 +1,7 @@
-package com.zitadelz.system.core
+package com.round.system.core
 
 import com.google.protobuf.MessageLite
+
 import net.sandrogrzicic.scalabuff.Message
 
 object Predef {

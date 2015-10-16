@@ -1,4 +1,4 @@
-package com.zitadelz.system.core
+package com.round.system.core
 
 /**
  * Model data objects that can be used all around the Zitadels systems, backend
