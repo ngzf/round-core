@@ -11,7 +11,7 @@ description := "A template for sbt projects."
 
 version := Version.ours()
 
-organization := "com.zitadelz"
+organization := "com.round"
 
 organizationHomepage := Some(url("http://zitadelz.com"))
 
