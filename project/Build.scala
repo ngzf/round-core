@@ -1,6 +1,8 @@
 import sbt._
 import Keys._
 
+import com.round.sbt.SbtRound.autoImport._
+
 import com.typesafe.sbt.SbtScalariform
 import com.typesafe.sbt.SbtScalariform.ScalariformKeys
 
@@ -18,19 +20,12 @@ object ApplicationBuild extends Build {
     ScalariformKeys.preferences in Compile := formattingPreferences,
     ScalariformKeys.preferences in Test := formattingPreferences)
 
-  val buildSettings = Defaults.coreDefaultSettings ++ Publish.defaultSettings ++ formatSettings ++ Seq(
-    scalaVersion in ThisBuild := Version.scala,
-    unmanagedSourceDirectories in Compile <<= (scalaSource in Compile)(_ :: Nil),
-    unmanagedSourceDirectories in Test <<= (scalaSource in Test)(_ :: Nil),
-    scalacOptions in Compile ++= List("-Xmax-classfile-name", "143"), // ecryptfs limit, see https://bugs.launchpad.net/ecryptfs/+bug/344878 and https://issues.scala-lang.org/browse/SI-3623
-    scalacOptions in Compile += "-feature",
-    scalacOptions += "-Dscalac.patmat.analysisBudget=off",
-    resolvers := Seq(
-      "Zitadelz Artifactory" at "http://artifactory:8081/artifactory/repo",
-      Resolver.file("Local Ivy Repository", file(Path.userHome.absolutePath + "/.ivy2/local"))(Resolver.ivyStylePatterns),
-      "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases",
-      "Typesafe Maven Repository" at "http://repo.typesafe.com/typesafe/maven-releases",
-      "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases")) ++ super.settings
+  val buildSettings = Defaults.coreDefaultSettings ++ roundSettings ++ formatSettings ++ Seq(
+    name := "TEMPLATE",
+    description := "A template for sbt projects.",
+    libraryDependencies ++= Seq(
+    )
+  ) ++ super.settings
 
   lazy val root = Project(id = "root", base = file("."), settings = buildSettings)
 }
