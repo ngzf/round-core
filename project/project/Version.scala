@@ -8,7 +8,7 @@ object Version {
   val specs2 = "3.6.4"
   val logback = "1.1.3"
 
-  def major: Int = 1
+  def major: Int = 2
   def minor: Int = 0
   def fix: Int = 0
   def snapshot: Boolean = true
