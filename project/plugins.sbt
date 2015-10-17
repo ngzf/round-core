@@ -1,1 +1,0 @@
-libraryDependencies += Library.scalabuffCompiler()

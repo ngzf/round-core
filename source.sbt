@@ -1,1 +1,0 @@
-SourceManaged.protobufSettings()

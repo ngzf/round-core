@@ -1,8 +1,0 @@
-package com.round.system.core;
-
-message EnvelopeProtuf {
-  required bytes payload = 1;
-  optional int64 sequenceNr = 2;
-  optional bytes manifest = 3;
-  optional int32 serializerId = 4;
-}
