@@ -20,12 +20,7 @@ object ApplicationBuild extends Build {
     ScalariformKeys.preferences in Compile := formattingPreferences,
     ScalariformKeys.preferences in Test := formattingPreferences)
 
-  val buildSettings = Defaults.coreDefaultSettings ++ roundSettings ++ formatSettings ++ Seq(
-    name := "TEMPLATE",
-    description := "A template for sbt projects.",
-    libraryDependencies ++= Seq(
-    )
-  ) ++ super.settings
+  val buildSettings = Defaults.coreDefaultSettings ++ roundSettings ++ formatSettings
 
   lazy val root = Project(id = "root", base = file("."), settings = buildSettings)
 }
