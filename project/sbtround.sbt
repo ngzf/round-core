@@ -1,1 +1,1 @@
-addSbtPlugin("com.round" %% "round-build" % Version.ours())
+addSbtPlugin("com.round" %% "round-build" % Version.plugin)

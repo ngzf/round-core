@@ -1,4 +1,2 @@
-Defaults.coreDefaultSettings
-
 roundSettings
 
