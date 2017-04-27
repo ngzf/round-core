@@ -1,18 +1,17 @@
 package com.round.system.core
 
-import com.google.protobuf.MessageLite
+import com.trueaccord.scalapb._
 
-import net.sandrogrzicic.scalabuff.Message
-
-object Predef {
-  private[core]type Protuf[P <: Protuf[P]] = MessageLite with MessageLite.Builder with Message[P] {
-    def msb: Long
-    def lsb: Long
-  }
+object IDMapper {
+  def apply[I <: HasId[I], P <: IdProtuf[I, P]](baseToCustom: Identifier[I] => P): TypeMapper[Identifier[I], P] =
+    TypeMapper(baseToCustom)(p => Identifier[I](p.msb, p.lsb))
 }
 
-trait ProtufConv[I <: HasId[I], P <: Predef.Protuf[P]] {
-  def protuf(msb: Long, lsb: Long): P
+trait Protuf[P <: Protuf[P]] extends GeneratedMessage with Message[P]
+
+trait IdProtuf[I <: HasId[I], P <: IdProtuf[I, P]] extends Protuf[P] with GeneratedMessage with Message[P] {
+  def msb: Long
+  def lsb: Long
 }
 
 case class WithPrefix[T](prefix: Int) extends AnyVal
