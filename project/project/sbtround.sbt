@@ -1,1 +1,1 @@
-addSbtPlugin("com.round" %% "round-build" % "2.0.0-SNAPSHOT")
+addSbtPlugin("com.round" %% "sbt-round" % "2.0.0-SNAPSHOT")

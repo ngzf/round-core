@@ -1,6 +1,7 @@
 *~
 logs
 *.log
+project/build.properties
 project/project/project
 project/project/target
 project/target
@@ -18,8 +19,10 @@ dist
 /data/
 /target
 /.target/
+eclipse.sbt
 /bin/
 /bin
+.cache-main
 .cache
 .directory
 .settings/
