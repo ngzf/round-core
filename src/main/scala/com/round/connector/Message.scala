@@ -5,7 +5,15 @@ trait Message {
   def timestamp: Long
 }
 
+object Message {
+  def unapply(m: Message): Option[Long] = m.timestamp.some
+}
+
 trait Event extends Message {
-  def sequenceNr: Int
-  def randomSeed: Long
+  def sequenceNr: Option[Int]
+  def randomSeed: Option[Long]
+}
+
+object Event {
+  def unapply(e: Event): Option[Option[Int] -> Option[Long]] = (e.sequenceNr, e.randomSeed).some
 }
