@@ -17,3 +17,11 @@ trait Event extends Message {
 object Event {
   def unapply(e: Event): Option[Option[Int] -> Option[Long]] = (e.sequenceNr, e.randomSeed).some
 }
+
+trait WithUser {
+  def userID: Option[ID]
+}
+
+object WithUser {
+  def unapply(u: WithUser): Option[Option[ID]] = (u.userID).some
+}
