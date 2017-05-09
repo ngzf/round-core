@@ -13,22 +13,22 @@ case class ID(msb: Long, lsb: Long) {
   lazy val base64 = ID.encoder.encodeAsString(binary)
 
   def timestamp: Long = msb >> ID.timestampShift & ID.timestampMask
-  def generatorNr: Long = msb >> ID.generatorNrShift & ID.generatorNrMask
+  def datatypeNr: Long = msb >> ID.datatypeNrShift & ID.datatypeNrMask
   def counter: Long = msb >> ID.counterShift & ID.counterMask
   def sequenceNr: Long = lsb >> ID.sequenceNrShift & ID.sequenceNrMask
   def randomSeed: Long = lsb >> ID.randomSeedShift & ID.randomSeedMask
 
-  def copy(timestamp: Long = timestamp, generatorNr: Long = generatorNr, sequenceNr: Long = sequenceNr, counter: Long = counter, randomSeed: Long = randomSeed): ID =
-    ID(timestamp, generatorNr, sequenceNr, counter, randomSeed)
+  def copy(timestamp: Long = timestamp, datatypeNr: Long = datatypeNr, sequenceNr: Long = sequenceNr, counter: Long = counter, randomSeed: Long = randomSeed): ID =
+    ID(timestamp, datatypeNr, sequenceNr, counter, randomSeed)
 
-  override def toString(): String = s"ID($base64|$timestamp|$generatorNr|$sequenceNr|$counter|$randomSeed)"
+  override def toString(): String = s"ID($base64|$timestamp|$datatypeNr|$sequenceNr|$counter|$randomSeed)"
 }
 
 /**
  * | 128 bits of an ID                                                      |
  * | most significant 64 bits          | least significant 64 bits          |
- * | timestamp | generatorNr | counter | reserved | sequenceNr | randomSeed |
- * | 42 bits   | 10 bits     | 12 bits | 12 bits  | 20 bits    | 32 bits    |
+ * | timestamp | datatypeNr | counter | reserved | sequenceNr | randomSeed |
+ * | 42 bits   | 10 bits    | 12 bits | 12 bits  | 20 bits    | 32 bits    |
  */
 object ID {
   val encoder = new Base64(-1, Array.empty[Byte], true)
@@ -39,13 +39,13 @@ object ID {
    * The fields should be `Long` because `a << b` with mess with use if `b` >= 32
    * Doesn't work with negative numbers
    */
-  def apply(timestamp: Long, generatorNr: Long, sequenceNr: Long, counter: Long, randomSeed: Long): ID = {
+  def apply(timestamp: Long, datatypeNr: Long, sequenceNr: Long, counter: Long, randomSeed: Long): ID = {
     val timestampBits = (timestamp & timestampMask) << timestampShift
-    val generatorNrBits = (generatorNr & generatorNrMask) << generatorNrShift
+    val datatypeNrBits = (datatypeNr & datatypeNrMask) << datatypeNrShift
     val counterBits = (counter & counterMask) << counterShift
     val sequenceNrBits = (sequenceNr & sequenceNrMask) << sequenceNrShift
     val randomSeedBits = (randomSeed & randomSeedMask) << randomSeedShift
-    ID(timestampBits | generatorNrBits | counterBits, sequenceNrBits | randomSeedBits)
+    ID(timestampBits | datatypeNrBits | counterBits, sequenceNrBits | randomSeedBits)
   }
 
   def apply(uuid: UUID): ID = ID(uuid.getMostSignificantBits, uuid.getLeastSignificantBits)
@@ -64,14 +64,14 @@ object ID {
   def counterShift: Int = 0
   def counterMask: Long = mask(counterSize)
 
-  /** Limits the number of generator types to 1024 */
-  def generatorNrSize: Int = 10
-  def generatorNrShift: Int = counterShift + counterSize
-  def generatorNrMask: Long = mask(generatorNrSize)
+  /** Limits the number of datatype types to 1024 */
+  def datatypeNrSize: Int = 10
+  def datatypeNrShift: Int = counterShift + counterSize
+  def datatypeNrMask: Long = mask(datatypeNrSize)
 
   /** Limits the time of roll-over to about 139 years */
   def timestampSize: Int = 42
-  def timestampShift: Int = generatorNrShift + generatorNrSize
+  def timestampShift: Int = datatypeNrShift + datatypeNrSize
   def timestampMask: Long = mask(timestampSize)
 
   /** Probability of 2 Actors having same seed is less than 1 / 4 billions */

@@ -6,7 +6,7 @@ import org.specs2.mutable.Specification
 class IDSpec extends Specification {
 
   s"An ${classOf[ID].getSimpleName}" should {
-    "should be created correctly from timestamp, generator number, sequence number, counter, and random seed" in {
+    "should be created correctly from timestamp, datatype number, sequence number, counter, and random seed" in {
       val ts = 3L
       val gid = 4L
       val snr = 435L
@@ -14,7 +14,7 @@ class IDSpec extends Specification {
       val rd = 12L
       val id = ID(ts, gid, snr, ctr, rd)
       id.timestamp must_== ts
-      id.generatorNr must_== gid
+      id.datatypeNr must_== gid
       id.sequenceNr must_== snr
       id.counter must_== ctr
       id.randomSeed must_== rd
@@ -38,17 +38,17 @@ class IDSpec extends Specification {
       val sid = ID(ts, gid, snr, ctr, 7)
       val id = ID(sid.msb, sid.lsb)
       id.timestamp must_== ts
-      id.generatorNr must_== gid
+      id.datatypeNr must_== gid
       id.sequenceNr must_== snr
       id.counter must_== ctr
       id.randomSeed must_== rd
     }
 
-    "should be created the same with timestamp, generator number, sequence number, counter, and random seed" in {
+    "should be created the same with timestamp, datatype number, sequence number, counter, and random seed" in {
       val msb = 3L
       val lsb = 4L
       val sid = ID(msb, lsb)
-      val id = ID(sid.timestamp, sid.generatorNr, sid.sequenceNr, sid.counter, sid.randomSeed)
+      val id = ID(sid.timestamp, sid.datatypeNr, sid.sequenceNr, sid.counter, sid.randomSeed)
 
       id.msb must_== msb
       id.lsb must_== lsb
@@ -80,16 +80,16 @@ class IDSpec extends Specification {
     "correctly implement extra copy method" in {
       val ref = ID(java.util.UUID.randomUUID())
       println(ref)
-      ref.copy(timestamp = 0) must_== ID(0, ref.generatorNr, ref.sequenceNr, ref.counter, ref.randomSeed)
-      ref.copy(timestamp = 1) must_== ID(1, ref.generatorNr, ref.sequenceNr, ref.counter, ref.randomSeed)
-      ref.copy(generatorNr = 0) must_== ID(ref.timestamp, 0, ref.sequenceNr, ref.counter, ref.randomSeed)
-      ref.copy(generatorNr = 1) must_== ID(ref.timestamp, 1, ref.sequenceNr, ref.counter, ref.randomSeed)
-      ref.copy(counter = 0) must_== ID(ref.timestamp, ref.generatorNr, ref.sequenceNr, 0, ref.randomSeed)
-      ref.copy(counter = 1) must_== ID(ref.timestamp, ref.generatorNr, ref.sequenceNr, 1, ref.randomSeed)
-      ref.copy(sequenceNr = 0) must_== ID(ref.timestamp, ref.generatorNr, 0, ref.counter, ref.randomSeed)
-      ref.copy(sequenceNr = 1) must_== ID(ref.timestamp, ref.generatorNr, 1, ref.counter, ref.randomSeed)
-      ref.copy(randomSeed = 0) must_== ID(ref.timestamp, ref.generatorNr, ref.sequenceNr, ref.counter, 0)
-      ref.copy(randomSeed = 1) must_== ID(ref.timestamp, ref.generatorNr, ref.sequenceNr, ref.counter, 1)
+      ref.copy(timestamp = 0) must_== ID(0, ref.datatypeNr, ref.sequenceNr, ref.counter, ref.randomSeed)
+      ref.copy(timestamp = 1) must_== ID(1, ref.datatypeNr, ref.sequenceNr, ref.counter, ref.randomSeed)
+      ref.copy(datatypeNr = 0) must_== ID(ref.timestamp, 0, ref.sequenceNr, ref.counter, ref.randomSeed)
+      ref.copy(datatypeNr = 1) must_== ID(ref.timestamp, 1, ref.sequenceNr, ref.counter, ref.randomSeed)
+      ref.copy(counter = 0) must_== ID(ref.timestamp, ref.datatypeNr, ref.sequenceNr, 0, ref.randomSeed)
+      ref.copy(counter = 1) must_== ID(ref.timestamp, ref.datatypeNr, ref.sequenceNr, 1, ref.randomSeed)
+      ref.copy(sequenceNr = 0) must_== ID(ref.timestamp, ref.datatypeNr, 0, ref.counter, ref.randomSeed)
+      ref.copy(sequenceNr = 1) must_== ID(ref.timestamp, ref.datatypeNr, 1, ref.counter, ref.randomSeed)
+      ref.copy(randomSeed = 0) must_== ID(ref.timestamp, ref.datatypeNr, ref.sequenceNr, ref.counter, 0)
+      ref.copy(randomSeed = 1) must_== ID(ref.timestamp, ref.datatypeNr, ref.sequenceNr, ref.counter, 1)
     }
   }
 }
