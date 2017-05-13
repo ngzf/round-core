@@ -1,0 +1,27 @@
+syntax = "proto2";
+
+package com.round.connector;
+
+import "scalapb/scalapb.proto";
+
+option (scalapb.options) = {
+  flat_package: true
+  single_file: true
+};
+
+message Location {
+  optional string address1 = 1;
+  optional string address2 = 2;
+  optional string state = 3;
+  optional string city = 4;
+  optional string zip = 5;
+  optional string country = 6;
+  optional double latitude = 7;
+  optional double longtitude = 8;
+}
+
+enum Gender {
+  Male = 1;
+  Female = 2;
+  Unspecified = 3;
+}

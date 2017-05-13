@@ -5,5 +5,6 @@ libraryDependencies ++= Seq(
   Library.play(),
   Library.scalaz(),
   Library.scalapb(),
+  Library.scalapb() % "protobuf",
   Library.specs2()
 )
