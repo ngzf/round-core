@@ -78,8 +78,8 @@ class IDSpec extends Specification {
     }
 
     "correctly implement extra copy method" in {
-      val ref = ID(java.util.UUID.randomUUID())
-      println(ref)
+      val base = ID(java.util.UUID.randomUUID())
+      val ref = ID.apply(base.timestamp, base.datatypeNr, base.sequenceNr, base.counter, base.randomSeed) // random and clear `reserved` field
       ref.copy(timestamp = 0) must_== ID(0, ref.datatypeNr, ref.sequenceNr, ref.counter, ref.randomSeed)
       ref.copy(timestamp = 1) must_== ID(1, ref.datatypeNr, ref.sequenceNr, ref.counter, ref.randomSeed)
       ref.copy(datatypeNr = 0) must_== ID(ref.timestamp, 0, ref.sequenceNr, ref.counter, ref.randomSeed)
@@ -107,6 +107,13 @@ class IDSpec extends Specification {
       reserved.sequenceNr must_== seqNr
       reserved.randomSeed must_== randomSeed
       reserved.reserved must_== 1L
+    }
+
+    "correctly copied with reserved" in {
+      val ref = ID(java.util.UUID.randomUUID())
+      val id = ref.copy(randomSeed = 999)
+      id.randomSeed must_== 999
+      id.reserved must_== ref.reserved
     }
   }
 }

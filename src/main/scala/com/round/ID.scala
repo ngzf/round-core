@@ -19,8 +19,11 @@ case class ID(msb: Long, lsb: Long) {
   def sequenceNr: Long = lsb >> ID.sequenceNrShift & ID.sequenceNrMask
   def randomSeed: Long = lsb >> ID.randomSeedShift & ID.randomSeedMask
 
-  def copy(timestamp: Long = timestamp, datatypeNr: Long = datatypeNr, sequenceNr: Long = sequenceNr, counter: Long = counter, randomSeed: Long = randomSeed): ID =
-    ID(timestamp, datatypeNr, sequenceNr, counter, randomSeed)
+  def copy(timestamp: Long = timestamp, datatypeNr: Long = datatypeNr, sequenceNr: Long = sequenceNr, counter: Long = counter, randomSeed: Long = randomSeed): ID = {
+    val base = ID(timestamp, datatypeNr, sequenceNr, counter, randomSeed)
+    val reservedBits = (this.reserved & ID.reservedMask) << ID.reservedShift
+    ID(msb = base.msb, lsb = base.lsb | reservedBits)
+  }
 
   def reserved(reservedType: ID.Reserved.ReservedType): ID =
     ID(msb = msb, lsb = lsb | reservedType.reservedBits)
