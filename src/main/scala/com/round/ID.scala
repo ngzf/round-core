@@ -15,22 +15,34 @@ case class ID(msb: Long, lsb: Long) {
   def timestamp: Long = msb >> ID.timestampShift & ID.timestampMask
   def datatypeNr: Long = msb >> ID.datatypeNrShift & ID.datatypeNrMask
   def counter: Long = msb >> ID.counterShift & ID.counterMask
+  def reserved: Long = lsb >> ID.reservedShift & ID.reservedMask
   def sequenceNr: Long = lsb >> ID.sequenceNrShift & ID.sequenceNrMask
   def randomSeed: Long = lsb >> ID.randomSeedShift & ID.randomSeedMask
 
   def copy(timestamp: Long = timestamp, datatypeNr: Long = datatypeNr, sequenceNr: Long = sequenceNr, counter: Long = counter, randomSeed: Long = randomSeed): ID =
     ID(timestamp, datatypeNr, sequenceNr, counter, randomSeed)
 
-  override def toString(): String = s"ID($base64|$timestamp|$datatypeNr|$sequenceNr|$counter|$randomSeed)"
+  def reserved(reservedType: ID.Reserved.ReservedType): ID =
+    ID(msb = msb, lsb = lsb | reservedType.reservedBits)
+
+  override def toString(): String = s"ID($base64|$timestamp|$datatypeNr|$sequenceNr|$counter|$randomSeed|$reserved)"
 }
 
 /**
- * | 128 bits of an ID                                                      |
- * | most significant 64 bits          | least significant 64 bits          |
+ * | 128 bits of an ID                                                     |
+ * | most significant 64 bits         | least significant 64 bits          |
  * | timestamp | datatypeNr | counter | reserved | sequenceNr | randomSeed |
  * | 42 bits   | 10 bits    | 12 bits | 12 bits  | 20 bits    | 32 bits    |
  */
 object ID {
+
+  object Reserved {
+    abstract class ReservedType(reserved: Int) {
+      val reservedBits = (reserved & reservedMask) << reservedShift
+    }
+    object Bootstrap extends ReservedType(1)
+  }
+
   val encoder = new Base64(-1, Array.empty[Byte], true)
 
   implicit val typeMapper = TypeMapper[String, ID](apply)(_.base64)
@@ -43,9 +55,10 @@ object ID {
     val timestampBits = (timestamp & timestampMask) << timestampShift
     val datatypeNrBits = (datatypeNr & datatypeNrMask) << datatypeNrShift
     val counterBits = (counter & counterMask) << counterShift
+    val reservedBits = (0 & reservedMask) << reservedShift
     val sequenceNrBits = (sequenceNr & sequenceNrMask) << sequenceNrShift
     val randomSeedBits = (randomSeed & randomSeedMask) << randomSeedShift
-    ID(timestampBits | datatypeNrBits | counterBits, sequenceNrBits | randomSeedBits)
+    ID(timestampBits | datatypeNrBits | counterBits, reservedBits | sequenceNrBits | randomSeedBits)
   }
 
   def apply(uuid: UUID): ID = ID(uuid.getMostSignificantBits, uuid.getLeastSignificantBits)
@@ -83,6 +96,10 @@ object ID {
   def sequenceNrSize: Int = 20
   def sequenceNrShift: Int = randomSeedShift + randomSeedSize
   def sequenceNrMask: Long = mask(sequenceNrSize)
+
+  def reservedSize: Int = 12
+  def reservedShift: Int = sequenceNrShift + sequenceNrSize
+  def reservedMask: Long = mask(reservedSize)
 
   private def mask(size: Int): Long = -1L ^ (-1L << size)
 }

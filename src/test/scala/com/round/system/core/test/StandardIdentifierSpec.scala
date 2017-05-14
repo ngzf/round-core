@@ -91,5 +91,22 @@ class IDSpec extends Specification {
       ref.copy(randomSeed = 0) must_== ID(ref.timestamp, ref.datatypeNr, ref.sequenceNr, ref.counter, 0)
       ref.copy(randomSeed = 1) must_== ID(ref.timestamp, ref.datatypeNr, ref.sequenceNr, ref.counter, 1)
     }
+
+    "be reservable" in {
+      val ts = util.Random.nextInt(4080)
+      val datatype = util.Random.nextInt(1024)
+      val counter = util.Random.nextInt(1024)
+      val seqNr = util.Random.nextInt(1024)
+      val randomSeed = util.Random.nextInt(8945)
+      val ref = ID.apply(ts, datatype, seqNr, counter, randomSeed)
+      ref.reserved must_== 0
+      val reserved = ref.reserved(ID.Reserved.Bootstrap)
+      reserved.timestamp must_== ts
+      reserved.datatypeNr must_== datatype
+      reserved.counter must_== counter
+      reserved.sequenceNr must_== seqNr
+      reserved.randomSeed must_== randomSeed
+      reserved.reserved must_== 1L
+    }
   }
 }
