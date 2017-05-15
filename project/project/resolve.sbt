@@ -1,5 +1,5 @@
 resolvers := Seq(
-  "Round Artifactory" at s"file://${System.getenv("HOME")}/Dropbox/artifactory/libs-snapshot-local",
+  Resolver.file("Round Artifactory", file(s"${System.getenv("HOME")}/raccoon/Dropbox/artifactory/libs-snapshot-local"))(Resolver.ivyStylePatterns),
   Resolver.defaultLocal,
   Resolver.mavenLocal,
   "Typesafe Repository" at "http://repo.typesafe.com/typesafe/releases",
