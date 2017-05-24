@@ -10,6 +10,7 @@ option (scalapb.options) = {
 };
 
 message Location {
+  option (scalapb.message).companion_extends = "LocationJson";
   optional string address1 = 1;
   optional string address2 = 2;
   optional string state = 3;

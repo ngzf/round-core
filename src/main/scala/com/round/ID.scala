@@ -5,6 +5,8 @@ import java.util.UUID
 
 import org.apache.commons.codec.binary.Base64
 
+import play.api.libs.json._
+
 import com.trueaccord.scalapb.TypeMapper
 
 case class ID(msb: Long, lsb: Long) {
@@ -49,6 +51,11 @@ object ID {
   val encoder = new Base64(-1, Array.empty[Byte], true)
 
   implicit val typeMapper = TypeMapper[String, ID](apply)(_.base64)
+
+  implicit val jsonFormat = new Format[ID] {
+    override def reads(json: JsValue): JsResult[ID] = JsSuccess(ID(json.as[String]))
+    override def writes(i: ID): JsString = JsString(i.base64)
+  }
 
   /**
    * The fields should be `Long` because `a << b` with mess with use if `b` >= 32
