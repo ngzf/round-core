@@ -11,6 +11,7 @@ option (scalapb.options) = {
 
 message Location {
   option (scalapb.message).companion_extends = "LocationJson";
+
   optional string address1 = 1;
   optional string address2 = 2;
   optional string state = 3;
@@ -25,4 +26,10 @@ enum Gender {
   Male = 1;
   Female = 2;
   Unspecified = 3;
+}
+
+message MessageProtobuf {
+  required bytes payload = 1;
+  optional bytes manifest = 2;
+  optional int32 serializerID = 3;
 }
