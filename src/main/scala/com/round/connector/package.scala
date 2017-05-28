@@ -2,12 +2,9 @@ package com.round
 
 import play.api.libs.json._
 
-import com.trueaccord.scalapb.GeneratedEnumCompanion
-import com.trueaccord.scalapb.GeneratedMessageCompanion
-
 package object connector {
 
-  trait LocationJson { _: GeneratedMessageCompanion[Location] =>
+  trait LocationJson { _: Location.type =>
     implicit val jsonFormat = Json.format[Location]
   }
 
