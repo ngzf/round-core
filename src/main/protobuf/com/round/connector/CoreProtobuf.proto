@@ -12,14 +12,21 @@ option (scalapb.options) = {
 message Location {
   option (scalapb.message).companion_extends = "LocationJson";
 
-  optional string address1 = 1;
-  optional string address2 = 2;
-  optional string state = 3;
-  optional string city = 4;
-  optional string zip = 5;
-  optional string country = 6;
-  optional double latitude = 7;
-  optional double longtitude = 8;
+  optional Address address = 1;
+  optional double latitude = 2;
+  optional double longtitude = 3;
+}
+
+message Address {
+  option (scalapb.message).companion_extends = "AddressJson";
+
+  optional string line1 = 1;
+  optional string line2 = 2;
+  optional string ward = 3;
+  optional string district = 4;
+  optional string city = 5;
+  optional string province = 6;
+  optional string country = 7;
 }
 
 enum Gender {
