@@ -12,8 +12,7 @@ package object connector {
     val inMapping = objectField("location").fields(
       Address.inMapping,
       doubleField("latitude"),
-      doubleField("longtitude")
-    )
+      doubleField("longtitude"))
   }
 
   trait AddressJson { _: Address.type =>
@@ -26,8 +25,7 @@ package object connector {
       textField("district"),
       textField("city"),
       textField("province"),
-      textField("country")
-    )
+      textField("country"))
   }
 
   implicit val genderFormat: Format[Gender] = new Format[Gender] {
